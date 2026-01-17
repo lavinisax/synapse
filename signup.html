@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign up for SYNAPSE - Start your journey to exam mastery.">
+    <title>Sign Up — SYNAPSE</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8);
+            background:
+                radial-gradient(ellipse at 20% 50%, var(--electric-blue-glow) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, var(--purple-glow) 0%, transparent 50%),
+                var(--navy-deep);
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .auth-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-heading);
+            font-size: var(--text-3xl);
+            font-weight: 700;
+            color: var(--off-white);
+            text-decoration: none;
+            margin-bottom: var(--space-4);
+        }
+
+        .auth-logo-icon {
+            font-size: var(--text-4xl);
+        }
+
+        .auth-logo-text {
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .auth-title {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-2);
+        }
+
+        .auth-subtitle {
+            color: var(--soft-gray);
+        }
+
+        .auth-card {
+            background: var(--navy-mid);
+            border: 1px solid var(--slate);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+        }
+
+        /* Progress Steps */
+        .signup-progress {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: var(--text-sm);
+            background: var(--slate);
+            color: var(--soft-gray);
+            transition: all var(--transition-base);
+        }
+
+        .step-number.active {
+            background: var(--electric-blue);
+            color: var(--navy-deep);
+        }
+
+        .step-number.completed {
+            background: var(--success);
+            color: var(--navy-deep);
+        }
+
+        .step-line {
+            width: 40px;
+            height: 2px;
+            background: var(--slate);
+        }
+
+        .step-line.completed {
+            background: var(--success);
+        }
+
+        /* Form Styles */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-5);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .form-label {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--off-white);
+        }
+
+        .form-input {
+            padding: var(--space-3) var(--space-4);
+            background: var(--navy-deep);
+            border: 1px solid var(--slate);
+            border-radius: var(--radius-lg);
+            color: var(--off-white);
+            font-family: var(--font-body);
+            font-size: var(--text-base);
+            transition: all var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 0 3px var(--electric-blue-glow);
+        }
+
+        .form-input::placeholder {
+            color: var(--muted);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+
+        /* Avatar Selection */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: var(--space-3);
+        }
+
+        .avatar-option {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-2xl);
+            background: var(--navy-deep);
+            border: 2px solid var(--slate);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .avatar-option:hover {
+            border-color: var(--electric-blue);
+            transform: scale(1.05);
+        }
+
+        .avatar-option.selected {
+            border-color: var(--electric-blue);
+            background: var(--electric-blue-glow);
+        }
+
+        /* Exam Selection */
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+        }
+
+        .exam-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-6);
+            background: var(--navy-deep);
+            border: 2px solid var(--slate);
+            border-radius: var(--radius-xl);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .exam-option:hover {
+            border-color: var(--electric-blue);
+            transform: translateY(-2px);
+        }
+
+        .exam-option.selected {
+            border-color: var(--electric-blue);
+            background: var(--electric-blue-glow);
+        }
+
+        .exam-icon {
+            font-size: var(--text-3xl);
+        }
+
+        .exam-name {
+            font-weight: 600;
+            color: var(--off-white);
+        }
+
+        .exam-desc {
+            font-size: var(--text-xs);
+            color: var(--soft-gray);
+            text-align: center;
+        }
+
+        /* Step Forms */
+        .step-form {
+            display: none;
+        }
+
+        .step-form.active {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .step-title {
+            font-family: var(--font-heading);
+            font-size: var(--text-xl);
+            text-align: center;
+            margin-bottom: var(--space-4);
+        }
+
+        /* Buttons */
+        .form-buttons {
+            display: flex;
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        .form-buttons .btn {
+            flex: 1;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: var(--space-6);
+            color: var(--soft-gray);
+            font-size: var(--text-sm);
+        }
+
+        .auth-footer a {
+            color: var(--electric-blue);
+            font-weight: 500;
+        }
+
+        .error-message {
+            padding: var(--space-3);
+            background: var(--danger-glow);
+            border: 1px solid var(--danger);
+            border-radius: var(--radius-lg);
+            color: var(--danger);
+            font-size: var(--text-sm);
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <a href="index.html" class="auth-logo">
+                    <span class="auth-logo-icon">🧠</span>
+                    <span class="auth-logo-text">SYNAPSE</span>
+                </a>
+                <h1 class="auth-title">Begin Your Journey</h1>
+                <p class="auth-subtitle">Create your account and start leveling up</p>
+            </div>
+
+            <div class="auth-card">
+                <!-- Progress Steps -->
+                <div class="signup-progress">
+                    <div class="progress-step">
+                        <div class="step-number active" id="step-1-indicator">1</div>
+                    </div>
+                    <div class="step-line" id="line-1"></div>
+                    <div class="progress-step">
+                        <div class="step-number" id="step-2-indicator">2</div>
+                    </div>
+                    <div class="step-line" id="line-2"></div>
+                    <div class="progress-step">
+                        <div class="step-number" id="step-3-indicator">3</div>
+                    </div>
+                    <div class="step-line" id="line-3"></div>
+                    <div class="progress-step">
+                        <div class="step-number" id="step-4-indicator">4</div>
+                    </div>
+                </div>
+
+                <div class="error-message" id="error-message"></div>
+
+                <!-- Step 1: Account -->
+                <form class="step-form active" id="step-1">
+                    <h2 class="step-title">Create Your Account</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="scholar@synapse.ai" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" class="form-input" placeholder="At least 8 characters"
+                            minlength="8" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" class="form-input"
+                            placeholder="Confirm your password" required>
+                    </div>
+
+                    <button type="button" class="btn btn-arena w-full" onclick="nextStep(1)">
+                        <span>Continue</span>
+                        <span>→</span>
+                    </button>
+                </form>
+
+                <!-- Step 2: Profile -->
+                <form class="step-form" id="step-2">
+                    <h2 class="step-title">Personalize Your Profile</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="display-name">Display Name</label>
+                        <input type="text" id="display-name" class="form-input" placeholder="What should we call you?"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Choose Your Avatar</label>
+                        <div class="avatar-grid" id="avatar-grid">
+                            <div class="avatar-option selected" data-avatar="🧠" onclick="selectAvatar(this)">🧠</div>
+                            <div class="avatar-option" data-avatar="🎓" onclick="selectAvatar(this)">🎓</div>
+                            <div class="avatar-option" data-avatar="🚀" onclick="selectAvatar(this)">🚀</div>
+                            <div class="avatar-option" data-avatar="⚡" onclick="selectAvatar(this)">⚡</div>
+                            <div class="avatar-option" data-avatar="🔮" onclick="selectAvatar(this)">🔮</div>
+                            <div class="avatar-option" data-avatar="🎯" onclick="selectAvatar(this)">🎯</div>
+                            <div class="avatar-option" data-avatar="🦉" onclick="selectAvatar(this)">🦉</div>
+                            <div class="avatar-option" data-avatar="🐺" onclick="selectAvatar(this)">🐺</div>
+                            <div class="avatar-option" data-avatar="🦁" onclick="selectAvatar(this)">🦁</div>
+                            <div class="avatar-option" data-avatar="🐉" onclick="selectAvatar(this)">🐉</div>
+                            <div class="avatar-option" data-avatar="🌟" onclick="selectAvatar(this)">🌟</div>
+                            <div class="avatar-option" data-avatar="💎" onclick="selectAvatar(this)">💎</div>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">
+                            <span>←</span>
+                            <span>Back</span>
+                        </button>
+                        <button type="button" class="btn btn-arena" onclick="nextStep(2)">
+                            <span>Continue</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Step 3: Exam Selection -->
+                <form class="step-form" id="step-3">
+                    <h2 class="step-title">Choose Your Exam</h2>
+
+                    <div class="exam-grid" id="exam-grid">
+                        <div class="exam-option selected" data-exam="sat" onclick="selectExam(this)">
+                            <span class="exam-icon">📚</span>
+                            <span class="exam-name">SAT</span>
+                            <span class="exam-desc">US College Admission</span>
+                        </div>
+                        <div class="exam-option" data-exam="ielts" onclick="selectExam(this)">
+                            <span class="exam-icon">🌍</span>
+                            <span class="exam-name">IELTS</span>
+                            <span class="exam-desc">International English</span>
+                        </div>
+                        <div class="exam-option" data-exam="toefl" onclick="selectExam(this)">
+                            <span class="exam-icon">🇺🇸</span>
+                            <span class="exam-name">TOEFL</span>
+                            <span class="exam-desc">English Proficiency</span>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">
+                            <span>←</span>
+                            <span>Back</span>
+                        </button>
+                        <button type="button" class="btn btn-arena" onclick="nextStep(3)">
+                            <span>Continue</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Step 4: Target Score -->
+                <form class="step-form" id="step-4">
+                    <h2 class="step-title">Set Your Target</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="target-score">Target Score</label>
+                            <input type="number" id="target-score" class="form-input" placeholder="1500" min="400"
+                                max="1600" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="exam-date">Exam Date</label>
+                            <input type="date" id="exam-date" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="current-score">Current Score (optional)</label>
+                        <input type="number" id="current-score" class="form-input"
+                            placeholder="Leave blank if first attempt" min="400" max="1600">
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(4)">
+                            <span>←</span>
+                            <span>Back</span>
+                        </button>
+                        <button type="button" class="btn btn-arena" onclick="completeSignup()">
+                            <span>🚀</span>
+                            <span>Start Journey</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <p class="auth-footer">
+                Already have an account? <a href="login.html">Log in</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Signup state
+        const signupData = {
+            email: '',
+            password: '',
+            displayName: '',
+            avatar: '🧠',
+            exam: 'sat',
+            targetScore: 1500,
+            examDate: '',
+            currentScore: null
+        };
+
+        let currentStep = 1;
+
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isAuthenticated()) {
+                window.location.href = 'dashboard.html';
+            }
+
+            // Set min date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('exam-date').min = today;
+        });
+
+        function nextStep(step) {
+            // Validate current step
+            if (!validateStep(step)) return;
+
+            // Save data
+            saveStepData(step);
+
+            // Update progress indicators
+            document.getElementById(`step-${step}-indicator`).classList.remove('active');
+            document.getElementById(`step-${step}-indicator`).classList.add('completed');
+            document.getElementById(`step-${step}-indicator`).textContent = '✓';
+            document.getElementById(`line-${step}`).classList.add('completed');
+            document.getElementById(`step-${step + 1}-indicator`).classList.add('active');
+
+            // Switch forms
+            document.getElementById(`step-${step}`).classList.remove('active');
+            document.getElementById(`step-${step + 1}`).classList.add('active');
+
+            currentStep = step + 1;
+        }
+
+        function prevStep(step) {
+            // Update progress indicators
+            document.getElementById(`step-${step}-indicator`).classList.remove('active');
+            document.getElementById(`step-${step - 1}-indicator`).classList.remove('completed');
+            document.getElementById(`step-${step - 1}-indicator`).classList.add('active');
+            document.getElementById(`step-${step - 1}-indicator`).textContent = step - 1;
+            document.getElementById(`line-${step - 1}`).classList.remove('completed');
+
+            // Switch forms
+            document.getElementById(`step-${step}`).classList.remove('active');
+            document.getElementById(`step-${step - 1}`).classList.add('active');
+
+            currentStep = step - 1;
+        }
+
+        function validateStep(step) {
+            hideError();
+
+            if (step === 1) {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                if (!email || !password) {
+                    showError('Please fill in all fields');
+                    return false;
+                }
+
+                if (password.length < 8) {
+                    showError('Password must be at least 8 characters');
+                    return false;
+                }
+
+                if (password !== confirmPassword) {
+                    showError('Passwords do not match');
+                    return false;
+                }
+
+                // Check if email already exists
+                if (userExists(email)) {
+                    showError('An account with this email already exists');
+                    return false;
+                }
+            }
+
+            if (step === 2) {
+                const displayName = document.getElementById('display-name').value;
+                if (!displayName) {
+                    showError('Please enter a display name');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function saveStepData(step) {
+            if (step === 1) {
+                signupData.email = document.getElementById('email').value;
+                signupData.password = document.getElementById('password').value;
+            }
+
+            if (step === 2) {
+                signupData.displayName = document.getElementById('display-name').value;
+            }
+
+            if (step === 3) {
+                // Already saved via selectExam
+            }
+        }
+
+        function selectAvatar(element) {
+            document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            signupData.avatar = element.dataset.avatar;
+        }
+
+        function selectExam(element) {
+            document.querySelectorAll('.exam-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            signupData.exam = element.dataset.exam;
+
+            // Update score placeholder based on exam
+            const scoreInput = document.getElementById('target-score');
+            if (signupData.exam === 'sat') {
+                scoreInput.placeholder = '1500';
+                scoreInput.min = 400;
+                scoreInput.max = 1600;
+            } else if (signupData.exam === 'ielts') {
+                scoreInput.placeholder = '7.5';
+                scoreInput.min = 0;
+                scoreInput.max = 9;
+                scoreInput.step = 0.5;
+            } else if (signupData.exam === 'toefl') {
+                scoreInput.placeholder = '100';
+                scoreInput.min = 0;
+                scoreInput.max = 120;
+            }
+        }
+
+        function completeSignup() {
+            // Get final data
+            signupData.targetScore = parseInt(document.getElementById('target-score').value) || 1500;
+            signupData.examDate = document.getElementById('exam-date').value;
+            signupData.currentScore = document.getElementById('current-score').value
+                ? parseInt(document.getElementById('current-score').value)
+                : null;
+
+            if (!signupData.examDate) {
+                showError('Please select your exam date');
+                return;
+            }
+
+            // Create user
+            const result = createUser(signupData.email, signupData.password, {
+                displayName: signupData.displayName,
+                avatar: signupData.avatar,
+                exam: signupData.exam,
+                targetScore: signupData.targetScore,
+                examDate: signupData.examDate,
+                currentScore: signupData.currentScore
+            });
+
+            if (result.success) {
+                // Auto-login and redirect
+                loginUser(signupData.email, signupData.password, true);
+                window.location.href = 'dashboard.html';
+            } else {
+                showError(result.error);
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            errorEl.textContent = message;
+            errorEl.classList.add('visible');
+        }
+
+        function hideError() {
+            document.getElementById('error-message').classList.remove('visible');
+        }
+    </script>
+</body>
+
+</html>

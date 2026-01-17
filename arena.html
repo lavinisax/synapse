@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYNAPSE Arena - Test your skills in timed challenges.">
+    <title>Arena — SYNAPSE</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- Arena Page -->
+    <div class="arena-page">
+        <!-- Arena Header -->
+        <header class="arena-header">
+            <a href="dashboard.html" class="btn btn-ghost btn-sm">
+                <span>←</span>
+                <span>Exit Arena</span>
+            </a>
+
+            <div class="arena-info">
+                <div class="arena-topic">
+                    <span>📐</span>
+                    <span id="topic-name">Math: Algebra</span>
+                </div>
+                <div class="arena-progress" id="progress">
+                    Question <span id="current-q">1</span> of <span id="total-q">5</span>
+                </div>
+            </div>
+
+            <div class="timer" id="timer">01:30</div>
+        </header>
+
+        <!-- Question Content -->
+        <main class="arena-content">
+            <!-- Topic Selection (initially visible) -->
+            <div id="topic-select" class="topic-selection">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl mb-4">🏟️ Arena Challenge</h1>
+                    <p class="text-muted">Choose your topic and test your skills</p>
+                </div>
+
+                <div class="topic-grid">
+                    <button class="topic-btn" onclick="startArena('math')">
+                        <span class="topic-icon">📐</span>
+                        <span class="topic-title">Math</span>
+                        <span class="topic-desc">Algebra, Geometry, Data Analysis</span>
+                    </button>
+
+                    <button class="topic-btn" onclick="startArena('reading')">
+                        <span class="topic-icon">📖</span>
+                        <span class="topic-title">Reading</span>
+                        <span class="topic-desc">Comprehension, Inference, Evidence</span>
+                    </button>
+
+                    <button class="topic-btn" onclick="startArena('writing')">
+                        <span class="topic-icon">✏️</span>
+                        <span class="topic-title">Writing</span>
+                        <span class="topic-desc">Grammar, Punctuation, Style</span>
+                    </button>
+                </div>
+
+                <!-- Wager Option (Toggle of Doom) -->
+                <div class="wager-container" id="wager-container">
+                    <label class="switch">
+                        <input type="checkbox" id="wager-mode" onchange="toggleWagerDanger()">
+                        <span class="slider round"></span>
+                    </label>
+                    <div class="wager-text">
+                        <span class="wager-title">⚠️ WAGER MODE</span>
+                        <span class="wager-subtitle">Risk <span class="text-gold">25 🧠</span> to win <span
+                                class="text-gold">2x XP</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Container (hidden initially) -->
+            <div id="question-container" class="question-container hidden">
+                <div class="question-number" id="question-number">Question 1 of 5</div>
+
+                <!-- Passage (for reading questions) -->
+                <div class="passage-container hidden" id="passage-container">
+                    <div class="passage-text" id="passage-text"></div>
+                </div>
+
+                <div class="question-text" id="question-text">
+                    Loading question...
+                </div>
+
+                <div class="answers-list" id="answers-list">
+                    <!-- Answers will be populated dynamically -->
+                </div>
+
+                <!-- Feedback Panel -->
+                <div class="feedback-panel hidden" id="feedback-panel">
+                    <div class="feedback-header">
+                        <span class="feedback-icon" id="feedback-icon">✓</span>
+                        <span class="feedback-title" id="feedback-title">Correct!</span>
+                    </div>
+                    <div class="feedback-explanation" id="feedback-explanation">
+                        <!-- Explanation will be populated -->
+                    </div>
+                </div>
+
+                <div class="arena-actions">
+                    <button class="btn btn-secondary hidden" id="hint-btn" onclick="useHint()">
+                        <span>💡</span>
+                        <span>Hint (-10 🧠)</span>
+                    </button>
+
+                    <div class="flex-1"></div>
+
+                    <button class="btn btn-primary hidden" id="submit-btn" onclick="submitAnswer()">
+                        Submit Answer
+                    </button>
+
+                    <button class="btn btn-arena hidden" id="next-btn" onclick="nextQuestion()">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Screen (hidden initially) -->
+            <div id="results-container" class="arena-results hidden">
+                <div class="results-icon" id="results-icon">🏆</div>
+                <h2 class="results-title" id="results-title">Arena Complete!</h2>
+
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="stat-correct">4/5</div>
+                        <div class="result-stat-label">Correct</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="stat-accuracy">80%</div>
+                        <div class="result-stat-label">Accuracy</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="stat-time">4:32</div>
+                        <div class="result-stat-label">Time</div>
+                    </div>
+                </div>
+
+                <div class="results-rewards">
+                    <div class="currency-display currency-braincells">
+                        <span class="currency-icon">🧠</span>
+                        <span>+</span>
+                        <span class="currency-amount" id="reward-xp">75</span>
+                        <span>XP</span>
+                    </div>
+                    <div class="currency-display currency-braincells">
+                        <span class="currency-icon">🧠</span>
+                        <span>+</span>
+                        <span class="currency-amount" id="reward-braincells">40</span>
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn-arena" onclick="restartArena()">
+                        <span>🔄</span>
+                        <span>Play Again</span>
+                    </button>
+                    <a href="dashboard.html" class="btn btn-secondary">
+                        <span>🏠</span>
+                        <span>Back to Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .topic-selection {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .topic-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 2rem;
+            background: var(--navy-mid);
+            border: 2px solid var(--slate);
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .topic-btn:hover {
+            border-color: var(--electric-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .topic-icon {
+            font-size: 3rem;
+        }
+
+        .topic-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--off-white);
+        }
+
+        .topic-desc {
+            font-size: 0.875rem;
+            color: var(--soft-gray);
+            text-align: center;
+        }
+
+        /* Wager Toggle of Doom */
+        .wager-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            background: var(--navy-mid);
+            border: 2px solid var(--slate);
+            border-radius: 1rem;
+            transition: all var(--transition-base);
+        }
+
+        .wager-container.danger-active {
+            border-color: #ffcc00;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .wager-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .wager-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--off-white);
+        }
+
+        .wager-subtitle {
+            font-size: 0.75rem;
+            color: var(--soft-gray);
+        }
+
+        .text-gold {
+            color: #ffcc00;
+            font-weight: 600;
+        }
+
+        .wager-icon {
+            font-size: 1.25rem;
+        }
+
+        .wager-desc {
+            font-size: 0.75rem;
+            color: var(--soft-gray);
+        }
+
+        .passage-container {
+            padding: 1.5rem;
+            background: var(--navy-mid);
+            border: 1px solid var(--slate);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .passage-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--soft-gray);
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Danger Mode for Arena Header */
+        .arena-header.danger-mode {
+            border-color: #ffcc00 !important;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+        }
+
+        .arena-header.danger-mode .timer {
+            color: #ffcc00;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.1);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.05);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/antigravity.js"></script>
+    <script src="js/data/questions.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/arena.js"></script>
+    <script>
+        // Toggle Wager Danger Mode
+        function toggleWagerDanger() {
+            const isRisking = document.getElementById('wager-mode').checked;
+            const wagerContainer = document.getElementById('wager-container');
+            const arenaHeader = document.querySelector('.arena-header');
+
+            if (isRisking) {
+                wagerContainer.classList.add('danger-active');
+                // Visual pulse effect
+                wagerContainer.style.animation = 'none';
+                wagerContainer.offsetHeight; // Trigger reflow
+                wagerContainer.style.animation = 'pulse 0.5s ease';
+            } else {
+                wagerContainer.classList.remove('danger-active');
+            }
+        }
+
+        // Override the arena feedback to use ANTIGRAVITY AI
+        const originalGenerateFeedback = window.generateFeedback;
+        window.generateFeedback = function (question, isCorrect) {
+            if (typeof generateArenaFeedback === 'function') {
+                return generateArenaFeedback(
+                    question,
+                    arenaState.selectedAnswer,
+                    isCorrect,
+                    arenaState.timeRemaining
+                );
+            }
+            return originalGenerateFeedback ? originalGenerateFeedback(question, isCorrect) : question.explanation;
+        };
+    </script>
+</body>
+
+</html>

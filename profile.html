@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYNAPSE Profile - Your stats, achievements, and skill progress.">
+    <title>Profile — SYNAPSE</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🧠</span>
+                    <span class="logo-text">SYNAPSE</span>
+                </a>
+
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                        <li><a href="arena.html" class="nav-link">Arena</a></li>
+                        <li><a href="sensei.html" class="nav-link">Sensei</a></li>
+                        <li><a href="profile.html" class="nav-link active">Profile</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-stats">
+                    <div class="level-badge level-badge-sm">
+                        <span class="level-value" id="header-level">23</span>
+                    </div>
+                    <div class="currency-display currency-braincells">
+                        <span class="currency-icon">🧠</span>
+                        <span class="currency-amount" id="header-braincells">1,250</span>
+                    </div>
+                    <div class="currency-display currency-darkmatter">
+                        <span class="currency-icon">💎</span>
+                        <span class="currency-amount" id="header-darkmatter">3</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" onclick="handleLogout()" style="margin-left: 0.5rem;">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Page -->
+    <main class="profile-page">
+        <div class="container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <div class="profile-avatar-img">👤</div>
+                    <div class="level-badge profile-avatar-level">
+                        <span class="level-value">23</span>
+                    </div>
+                </div>
+
+                <div class="profile-info">
+                    <h1 class="profile-name" id="profile-name">Scholar</h1>
+                    <p class="profile-title" id="profile-title">Rising Champion · SAT Warrior</p>
+
+                    <div class="profile-stats-row">
+                        <div class="profile-stat">
+                            <span class="profile-stat-value">2,450</span>
+                            <span class="profile-stat-label">Total XP</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="profile-stat-value">347</span>
+                            <span class="profile-stat-label">Questions</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="profile-stat-value">83%</span>
+                            <span class="profile-stat-label">Accuracy</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="profile-stat-value streak-value">7</span>
+                            <span class="profile-stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-currencies">
+                    <div class="currency-card">
+                        <span class="currency-icon-lg">🧠</span>
+                        <span class="currency-value braincell-value">1,250</span>
+                        <span class="currency-name">BrainCells</span>
+                    </div>
+                    <div class="currency-card">
+                        <span class="currency-icon-lg">💎</span>
+                        <span class="currency-value darkmatter-value">3</span>
+                        <span class="currency-name">Dark Matter</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <section class="stats-section">
+                <h2 class="section-title-sm">📊 Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🏟️</span>
+                        <span class="stat-card-value">42</span>
+                        <span class="stat-card-label">Arena Wins</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🧱</span>
+                        <span class="stat-card-value">15</span>
+                        <span class="stat-card-label">Dungeons Cleared</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">👑</span>
+                        <span class="stat-card-value">3</span>
+                        <span class="stat-card-label">Bosses Defeated</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">🧠</span>
+                        <span class="stat-card-value">8</span>
+                        <span class="stat-card-label">Sensei Sessions</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">👻</span>
+                        <span class="stat-card-value">5</span>
+                        <span class="stat-card-label">Ghost Battles</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card-icon">⏱️</span>
+                        <span class="stat-card-value">42h</span>
+                        <span class="stat-card-label">Study Time</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skill Trees -->
+            <section class="skill-trees-section" id="skills">
+                <h2 class="section-title-sm">🌳 Skill Trees</h2>
+
+                <div class="skill-tree-tabs">
+                    <button class="skill-tree-tab active" data-tree="sat">SAT</button>
+                    <button class="skill-tree-tab" data-tree="ielts">IELTS</button>
+                    <button class="skill-tree-tab" data-tree="toefl">TOEFL</button>
+                </div>
+
+                <div class="skill-tree-container" id="skill-tree-content">
+                    <!-- SAT Tree -->
+                    <div class="skill-tree-inner">
+                        <div class="skill-branch">
+                            <h3 class="skill-branch-title">📐 Math</h3>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" style="width: 65%;"></div>
+                            </div>
+                            <div class="skill-progress-text">
+                                <span>8 of 12 nodes unlocked</span>
+                                <span class="text-electric">65%</span>
+                            </div>
+                            <div class="skill-nodes">
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">📊
+                                    <div class="skill-node-tooltip">Basic Algebra<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">📈
+                                    <div class="skill-node-tooltip">Linear Equations<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">📐
+                                    <div class="skill-node-tooltip">Quadratics<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">🔢
+                                    <div class="skill-node-tooltip">Functions<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">📏
+                                    <div class="skill-node-tooltip">Geometry Basics<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">⭕
+                                    <div class="skill-node-tooltip">Circles<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">📉
+                                    <div class="skill-node-tooltip">Data Analysis<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node unlocked" onclick="showNodeInfo(this)">🎲
+                                    <div class="skill-node-tooltip">Probability<br><span
+                                            class="text-success">Unlocked</span></div>
+                                </div>
+                                <div class="skill-node available" onclick="showNodeInfo(this)">⚡
+                                    <div class="skill-node-tooltip">Advanced Algebra<br><span
+                                            class="text-electric">Available - Click to start</span></div>
+                                </div>
+                                <div class="skill-node locked" onclick="showNodeInfo(this)">🔮
+                                    <div class="skill-node-tooltip">Complex Numbers<br><span
+                                            class="skill-tooltip-req">🔒 Requires: Advanced Algebra</span></div>
+                                </div>
+                                <div class="skill-node locked" onclick="showNodeInfo(this)">📐
+                                    <div class="skill-node-tooltip">Trigonometry<br><span class="skill-tooltip-req">🔒
+                                            Requires: Complex Numbers</span></div>
+                                </div>
+                                <div class="skill-node locked" onclick="showNodeInfo(this)">💻
+                                    <div class="skill-node-tooltip">Desmos Mastery<br><span class="skill-tooltip-req">🔒
+                                            Requires: All Math nodes</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-branch">
+                            <h3 class="skill-branch-title">📖 Reading</h3>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" style="width: 45%;"></div>
+                            </div>
+                            <div class="skill-progress-text">
+                                <span>4 of 10 nodes unlocked</span>
+                                <span class="text-electric">40%</span>
+                            </div>
+                            <div class="skill-nodes">
+                                <div class="skill-node unlocked" data-tooltip="Main Idea">📝</div>
+                                <div class="skill-node unlocked" data-tooltip="Supporting Details">📋</div>
+                                <div class="skill-node unlocked" data-tooltip="Inference">🔍</div>
+                                <div class="skill-node unlocked" data-tooltip="Vocabulary">📚</div>
+                                <div class="skill-node available" data-tooltip="Author's Purpose">🎯</div>
+                                <div class="skill-node locked" data-tooltip="Tone & Mood">🎭</div>
+                                <div class="skill-node locked" data-tooltip="Text Structure">🏗️</div>
+                                <div class="skill-node locked" data-tooltip="Paired Passages">📑</div>
+                                <div class="skill-node locked" data-tooltip="Evidence Analysis">⚖️</div>
+                                <div class="skill-node locked" data-tooltip="Synthesis">🧩</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-branch">
+                            <h3 class="skill-branch-title">✏️ Writing</h3>
+                            <div class="skill-progress-bar">
+                                <div class="skill-progress-fill" style="width: 55%;"></div>
+                            </div>
+                            <div class="skill-progress-text">
+                                <span>5 of 8 nodes unlocked</span>
+                                <span class="text-electric">62%</span>
+                            </div>
+                            <div class="skill-nodes">
+                                <div class="skill-node unlocked" data-tooltip="Subject-Verb Agreement">✓</div>
+                                <div class="skill-node unlocked" data-tooltip="Pronouns">👤</div>
+                                <div class="skill-node unlocked" data-tooltip="Punctuation">❗</div>
+                                <div class="skill-node unlocked" data-tooltip="Sentence Structure">🔗</div>
+                                <div class="skill-node unlocked" data-tooltip="Transitions">↔️</div>
+                                <div class="skill-node available" data-tooltip="Concision">✂️</div>
+                                <div class="skill-node locked" data-tooltip="Style & Tone">🎨</div>
+                                <div class="skill-node locked" data-tooltip="Logical Flow">📊</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements -->
+            <section class="achievements-section">
+                <h2 class="section-title-sm">🏆 Achievements</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-badge" data-tooltip="Complete your first arena">
+                        <span class="achievement-icon">🏟️</span>
+                        <span class="achievement-name">First Blood</span>
+                    </div>
+                    <div class="achievement-badge" data-tooltip="7-day streak">
+                        <span class="achievement-icon">🔥</span>
+                        <span class="achievement-name">On Fire</span>
+                    </div>
+                    <div class="achievement-badge" data-tooltip="100% accuracy in arena">
+                        <span class="achievement-icon">🎯</span>
+                        <span class="achievement-name">Perfect Score</span>
+                    </div>
+                    <div class="achievement-badge" data-tooltip="Clear your first dungeon">
+                        <span class="achievement-icon">🧱</span>
+                        <span class="achievement-name">Dungeon Crawler</span>
+                    </div>
+                    <div class="achievement-badge" data-tooltip="Complete Sensei mode">
+                        <span class="achievement-icon">🧠</span>
+                        <span class="achievement-name">Teacher's Pet</span>
+                    </div>
+                    <div class="achievement-badge" data-tooltip="Defeat a boss">
+                        <span class="achievement-icon">👑</span>
+                        <span class="achievement-name">Boss Slayer</span>
+                    </div>
+                    <div class="achievement-badge locked" data-tooltip="Beat your ghost">
+                        <span class="achievement-icon">👻</span>
+                        <span class="achievement-name">Time Traveler</span>
+                    </div>
+                    <div class="achievement-badge locked" data-tooltip="30-day streak">
+                        <span class="achievement-icon">💎</span>
+                        <span class="achievement-name">Dedicated</span>
+                    </div>
+                    <div class="achievement-badge locked" data-tooltip="Reach level 50">
+                        <span class="achievement-icon">⭐</span>
+                        <span class="achievement-name">Elite</span>
+                    </div>
+                    <div class="achievement-badge locked" data-tooltip="Master all SAT skills">
+                        <span class="achievement-icon">🏆</span>
+                        <span class="achievement-name">SAT Master</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ghost Records -->
+            <section class="ghost-section">
+                <h2 class="section-title-sm">👻 Ghost Records</h2>
+                <div class="ghost-records">
+                    <div class="ghost-record">
+                        <div class="ghost-info">
+                            <span class="ghost-topic">Math: Algebra</span>
+                            <span class="ghost-date text-muted">Jan 15, 2026</span>
+                        </div>
+                        <div class="ghost-stats">
+                            <span class="ghost-score">5/5 correct</span>
+                            <span class="ghost-time text-electric">2:45</span>
+                        </div>
+                        <button class="btn btn-sm btn-ghost">Race</button>
+                    </div>
+                    <div class="ghost-record">
+                        <div class="ghost-info">
+                            <span class="ghost-topic">Reading: Inference</span>
+                            <span class="ghost-date text-muted">Jan 14, 2026</span>
+                        </div>
+                        <div class="ghost-stats">
+                            <span class="ghost-score">4/5 correct</span>
+                            <span class="ghost-time text-electric">3:12</span>
+                        </div>
+                        <button class="btn btn-sm btn-ghost">Race</button>
+                    </div>
+                    <div class="ghost-record">
+                        <div class="ghost-info">
+                            <span class="ghost-topic">Writing: Grammar</span>
+                            <span class="ghost-date text-muted">Jan 13, 2026</span>
+                        </div>
+                        <div class="ghost-stats">
+                            <span class="ghost-score">5/5 correct</span>
+                            <span class="ghost-time text-electric">2:18</span>
+                        </div>
+                        <button class="btn btn-sm btn-ghost">Race</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <style>
+        .section-title-sm {
+            font-family: var(--font-heading);
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .stats-section,
+        .achievements-section,
+        .ghost-section {
+            margin-bottom: var(--space-12);
+        }
+
+        .profile-currencies {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .currency-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            background: var(--navy-deep);
+            border-radius: var(--radius-lg);
+        }
+
+        .currency-icon-lg {
+            font-size: 1.5rem;
+        }
+
+        .currency-value {
+            font-family: var(--font-mono);
+            font-size: var(--text-xl);
+            font-weight: 700;
+            color: var(--off-white);
+        }
+
+        .currency-name {
+            font-size: var(--text-sm);
+            color: var(--soft-gray);
+        }
+
+        .skill-branch {
+            margin-bottom: var(--space-8);
+        }
+
+        .skill-branch-title {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-3);
+        }
+
+        .skill-progress-bar {
+            height: 8px;
+            background: var(--slate);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: var(--space-2);
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--electric-blue), var(--purple));
+            border-radius: var(--radius-full);
+        }
+
+        .skill-progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--text-sm);
+            color: var(--soft-gray);
+            margin-bottom: var(--space-4);
+        }
+
+        .skill-nodes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+        }
+
+        .ghost-records {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .ghost-record {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-4);
+            background: var(--navy-mid);
+            border: 1px solid var(--slate);
+            border-radius: var(--radius-lg);
+        }
+
+        .ghost-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .ghost-topic {
+            font-weight: 600;
+        }
+
+        .ghost-stats {
+            display: flex;
+            gap: var(--space-4);
+            font-family: var(--font-mono);
+            font-size: var(--text-sm);
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-currencies {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .ghost-record {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .ghost-info {
+                align-items: center;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Auth check
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadProfileData();
+        });
+
+        function loadProfileData() {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            // Update header
+            document.getElementById('header-level').textContent = user.stats.level;
+            document.getElementById('header-braincells').textContent = user.stats.braincells.toLocaleString();
+            document.getElementById('header-darkmatter').textContent = user.stats.darkmatter;
+
+            // Update profile
+            document.getElementById('profile-name').textContent = user.profile.displayName;
+
+            // Calculate title based on level
+            let title = 'Beginner';
+            if (user.stats.level >= 10) title = 'Rising Champion';
+            if (user.stats.level >= 25) title = 'Elite Scholar';
+            if (user.stats.level >= 50) title = 'Grand Master';
+
+            document.getElementById('profile-title').textContent = `${title} \u00b7 ${user.profile.exam.toUpperCase()} Warrior`;
+        }
+
+        function handleLogout() {
+            logoutUser();
+            window.location.href = 'login.html';
+        }
+
+        function showNodeInfo(node) {
+            const isLocked = node.classList.contains('locked');
+            const isAvailable = node.classList.contains('available');
+
+            if (isLocked) {
+                // Show locked message
+                console.log('Node is locked. Complete prerequisites first.');
+            } else if (isAvailable) {
+                // Would navigate to training for this skill
+                if (confirm('Start training this skill?')) {
+                    window.location.href = 'arena.html';
+                }
+            }
+        }
+
+        // Skill tree tab switching
+        document.querySelectorAll('.skill-tree-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.skill-tree-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const tree = tab.dataset.tree;
+                console.log(`Switched to ${tree} skill tree`);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="SYNAPSE - Study like a game. Win real scores. The AI-powered educational RPG for SAT, IELTS, and TOEFL mastery.">
+  <title>SYNAPSE — Study Like a Game. Win Real Scores.</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-icon">🧠</span>
+          <span class="logo-text">SYNAPSE</span>
+        </a>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#features" class="nav-link">Features</a></li>
+            <li><a href="#modes" class="nav-link">Game Modes</a></li>
+            <li><a href="#oracle" class="nav-link">The Oracle</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-stats" id="header-buttons">
+          <a href="login.html" class="btn btn-ghost">Log In</a>
+          <a href="signup.html" class="btn btn-primary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="particles"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge animate-slide-up">
+        <span>⚡</span>
+        <span>Now in Beta — Join the Revolution</span>
+      </div>
+
+      <h1 class="hero-title animate-slide-up stagger-1">
+        Study like a <span class="highlight text-electric-glow">game</span>.<br>
+        Win <span class="highlight text-electric-glow">real scores</span>.
+      </h1>
+
+      <p class="hero-subtitle animate-slide-up stagger-2">
+        The AI-powered educational RPG that transforms SAT, IELTS, and TOEFL prep
+        into a skill-based adventure. Level up your brain. Conquer your exams.
+      </p>
+
+      <div class="hero-xp-demo animate-slide-up stagger-3">
+        <div class="hero-xp-label">
+          <span class="text-muted">Level Progress</span>
+          <span class="hero-xp-level">LVL 23 → 24</span>
+        </div>
+        <div class="xp-bar xp-bar-glow">
+          <div class="xp-bar-fill" style="width: 72%;" id="hero-xp"></div>
+        </div>
+        <div class="flex justify-between mt-4 text-sm">
+          <span class="text-muted">2,450 XP</span>
+          <span class="text-electric">3,400 XP needed</span>
+        </div>
+      </div>
+
+      <div class="hero-cta animate-slide-up stagger-4">
+        <a href="signup.html" class="btn btn-arena">
+          <span>⚡</span>
+          <span>Start Your Journey</span>
+        </a>
+        <a href="#oracle" class="btn btn-ghost">
+          <span>🔮</span>
+          <span>See Your Predicted Score</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Not an App. Not a Course.</h2>
+        <p class="section-subtitle">
+          A complete game ecosystem designed to prove mastery through understanding—not memorization.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate-slide-up">
+          <div class="feature-icon">🎮</div>
+          <h3 class="feature-title">Skill-Based Progression</h3>
+          <p class="feature-description">
+            XP reflects clarity and consistency, not grinding. Level up by truly understanding, not just repeating.
+          </p>
+        </div>
+
+        <div class="feature-card animate-slide-up stagger-1">
+          <div class="feature-icon">🧬</div>
+          <h3 class="feature-title">Adaptive AI</h3>
+          <p class="feature-description">
+            ANTIGRAVITY diagnoses your mistakes, challenges gently, and adapts to your confidence level.
+          </p>
+        </div>
+
+        <div class="feature-card animate-slide-up stagger-2">
+          <div class="feature-icon">🌳</div>
+          <h3 class="feature-title">Skill Trees</h3>
+          <p class="feature-description">
+            Each exam has its own tree. Unlock new modes, harder content, and prestige titles as you evolve.
+          </p>
+        </div>
+
+        <div class="feature-card animate-slide-up stagger-3">
+          <div class="feature-icon">🔮</div>
+          <h3 class="feature-title">Live Score Prediction</h3>
+          <p class="feature-description">
+            The Oracle shows your real-time predicted score and probability of hitting your target.
+          </p>
+        </div>
+
+        <div class="feature-card animate-slide-up stagger-4">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">Sensei Mode</h3>
+          <p class="feature-description">
+            Teach the AI to prove mastery. If you can't explain it clearly, you don't truly understand.
+          </p>
+        </div>
+
+        <div class="feature-card animate-slide-up stagger-5">
+          <div class="feature-icon">⚔️</div>
+          <h3 class="feature-title">Social Raids</h3>
+          <p class="feature-description">
+            Squad-based live events. Tackle world bosses together. Heal teammates. Win rare rewards.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game Modes Section -->
+  <section class="game-modes" id="modes">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Choose Your Challenge</h2>
+        <p class="section-subtitle">
+          Multiple game modes designed to build mastery from every angle.
+        </p>
+      </div>
+
+      <div class="modes-grid">
+        <div class="mode-card">
+          <div class="mode-icon">🏟️</div>
+          <h3 class="mode-title">Arena</h3>
+          <p class="mode-description">
+            Daily short challenges. Timed battles. Wager your BrainCells. Build streaks.
+          </p>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-icon">🧱</div>
+          <h3 class="mode-title">Dungeons</h3>
+          <p class="mode-description">
+            AI-generated challenges spawned from your error logs. Increasing difficulty. Clear for massive XP.
+          </p>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-icon">👑</div>
+          <h3 class="mode-title">Boss Fights</h3>
+          <p class="mode-description">
+            Weekly full mocks. Your target score is the boss HP. Unique every time. Drop Dark Matter.
+          </p>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-icon">🧠</div>
+          <h3 class="mode-title">Sensei Mode</h3>
+          <p class="mode-description">
+            Unlock after mastery. Teach the AI. It resists weak explanations. Earn prestige and Dark Matter.
+          </p>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-icon">👻</div>
+          <h3 class="mode-title">Ghost Battles</h3>
+          <p class="mode-description">
+            Race against other users or your past self. Speed + accuracy. Earn Time Traveler badges.
+          </p>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-icon">🎧</div>
+          <h3 class="mode-title">Synapse FM</h3>
+          <p class="mode-description">
+            AI-generated audio drills. Personalized to your weaknesses. Passive XP. Perfect for commutes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Oracle Preview Section -->
+  <section class="oracle-preview" id="oracle">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">The Oracle</h2>
+        <p class="section-subtitle">
+          Always visible. Always updating. Turn anxiety into control.
+        </p>
+      </div>
+
+      <div class="oracle-demo">
+        <div class="oracle-panel">
+          <div class="oracle-header">
+            <span class="oracle-icon">🔮</span>
+            <span class="oracle-title">Live Score Engine</span>
+          </div>
+
+          <div class="oracle-score">
+            <div class="oracle-score-value" id="oracle-score">1420</div>
+            <div class="oracle-score-label">Predicted Score</div>
+          </div>
+
+          <div class="oracle-target">
+            <span class="oracle-target-label">Target Score</span>
+            <span class="oracle-target-value">1500</span>
+          </div>
+
+          <div class="oracle-target">
+            <span class="oracle-target-label">Days Until Exam</span>
+            <span class="oracle-target-value">45</span>
+          </div>
+
+          <div class="oracle-probability">
+            <div class="oracle-probability-value" id="oracle-prob">73%</div>
+            <div class="oracle-probability-label">Success Probability</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Economy Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Earn Your Power</h2>
+        <p class="section-subtitle">
+          A clean, honor-based economy. Skill is the only currency that matters.
+        </p>
+      </div>
+
+      <div class="features-grid" style="max-width: 700px; margin: 0 auto;">
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">BrainCells</h3>
+          <p class="feature-description">
+            Earned through practice, streaks, and arenas. Spend on hints, time freeze, and power-ups.
+          </p>
+          <div class="currency-display currency-braincells" style="margin-top: var(--space-4);">
+            <span class="currency-icon">🧠</span>
+            <span class="currency-amount">1,250</span>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💎</div>
+          <h3 class="feature-title">Dark Matter</h3>
+          <p class="feature-description">
+            Earned ONLY through Sensei Mode, Boss Fights, and Raids. Cannot be bought. This preserves honor.
+          </p>
+          <div class="currency-display currency-darkmatter" style="margin-top: var(--space-4);">
+            <span class="currency-icon">💎</span>
+            <span class="currency-amount">3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="cta-title">Ready to Level Up?</h2>
+      <p class="cta-subtitle">
+        You don't "finish content." You evolve your brain.
+      </p>
+      <a href="signup.html" class="btn btn-arena">
+        <span>🚀</span>
+        <span>Start Your Journey</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <span class="logo-icon">🧠</span>
+            <span class="logo-text">SYNAPSE</span>
+          </a>
+          <p class="footer-description">
+            Study like a game. Win real scores. The AI-powered educational RPG for exam mastery.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Exams</h4>
+            <ul>
+              <li><a href="#">SAT</a></li>
+              <li><a href="#">IELTS</a></li>
+              <li><a href="#">TOEFL</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Game</h4>
+            <ul>
+              <li><a href="#">Arena</a></li>
+              <li><a href="#">Dungeons</a></li>
+              <li><a href="#">Sensei Mode</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 SYNAPSE. All rights reserved. Powered by ANTIGRAVITY.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Check if logged in, update header buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof isAuthenticated === 'function' && isAuthenticated()) {
+        const headerButtons = document.getElementById('header-buttons');
+        headerButtons.innerHTML = `
+          <a href="dashboard.html" class="btn btn-primary">Enter Dashboard</a>
+        `;
+      }
+    });
+  </script>
+</body>
+
+</html>

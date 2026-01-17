@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYNAPSE Dashboard - Your command center for exam mastery.">
+    <title>Dashboard — SYNAPSE</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- Server Ticker (Live Service Feel) -->
+    <div class="server-ticker">
+        <div class="ticker-content" id="ticker-content">
+            <span>🔴 <span class="highlight">LIVE RAID:</span> "The Oxford Comma Boss" has spawned. Squads forming
+                now.</span>
+            <span class="separator">///</span>
+            <span>🏆 User "<span class="highlight">MathWiz99</span>" just wagered 500 BrainCells and WON.</span>
+            <span class="separator">///</span>
+            <span>📈 <span class="highlight">+2,340 users</span> online now</span>
+            <span class="separator">///</span>
+            <span>⚡ New Arena record: "<span class="highlight">AlgebraQueen</span>" cleared 10/10 in 47 seconds</span>
+            <span class="separator">///</span>
+            <span>🔴 <span class="highlight">LIVE RAID:</span> "The Oxford Comma Boss" has spawned. Squads forming
+                now.</span>
+            <span class="separator">///</span>
+            <span>🏆 User "<span class="highlight">MathWiz99</span>" just wagered 500 BrainCells and WON.</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🧠</span>
+                    <span class="logo-text">SYNAPSE</span>
+                </a>
+
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+                        <li><a href="arena.html" class="nav-link">Arena</a></li>
+                        <li><a href="sensei.html" class="nav-link">Sensei</a></li>
+                        <li><a href="profile.html" class="nav-link">Profile</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-stats">
+                    <div class="level-badge level-badge-sm" data-tooltip="Level">
+                        <span class="level-value" id="header-level">23</span>
+                    </div>
+                    <div class="currency-display currency-braincells" data-tooltip="BrainCells">
+                        <span class="currency-icon">🧠</span>
+                        <span class="currency-amount" id="header-braincells">1,250</span>
+                    </div>
+                    <div class="currency-display currency-darkmatter" data-tooltip="Dark Matter">
+                        <span class="currency-icon">💎</span>
+                        <span class="currency-amount" id="header-darkmatter">3</span>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" onclick="handleLogout()" style="margin-left: 0.5rem;">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- Main Content -->
+                <div class="dashboard-main">
+                    <!-- Welcome Section -->
+                    <div class="welcome-section">
+                        <div class="welcome-header">
+                            <div>
+                                <h1 class="welcome-title">Welcome back, <span class="text-gradient"
+                                        id="user-name">Scholar</span></h1>
+                                <p class="welcome-date text-muted" id="current-date">Friday, January 16, 2026</p>
+                            </div>
+                            <div class="stat-badge streak-badge">
+                                <span class="stat-badge-icon">🔥</span>
+                                <span class="stat-badge-value" id="streak-value">7</span>
+                                <span>day streak</span>
+                            </div>
+                        </div>
+
+                        <!-- XP Progress -->
+                        <div class="xp-bar-container">
+                            <div class="level-badge">
+                                <span class="level-value" id="xp-level">23</span>
+                            </div>
+                            <div class="xp-bar xp-bar-glow">
+                                <div class="xp-bar-fill" id="xp-bar-fill" style="width: 72%;"></div>
+                            </div>
+                            <div class="xp-label">
+                                <span id="xp-current">2,450</span> / <span id="xp-max">3,400 XP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Quests -->
+                    <div class="quests-section">
+                        <div class="quests-header">
+                            <h2 class="quests-title">
+                                <span>📋</span>
+                                <span>Daily Quests</span>
+                            </h2>
+                            <span class="text-muted text-sm">2/3 Complete</span>
+                        </div>
+
+                        <div class="quests-list" id="quests-list">
+                            <div class="quest-card" data-quest="arena" onclick="location.href='arena.html'">
+                                <div class="quest-icon">🏟️</div>
+                                <div class="quest-info">
+                                    <div class="quest-title">Arena: Math Challenge</div>
+                                    <div class="quest-reward">+50 XP · +25 🧠</div>
+                                </div>
+                                <div class="quest-status"></div>
+                            </div>
+
+                            <div class="quest-card completed" data-quest="dungeon">
+                                <div class="quest-icon">🧱</div>
+                                <div class="quest-info">
+                                    <div class="quest-title">Dungeon: Grammar Gauntlet</div>
+                                    <div class="quest-reward">+100 XP · +50 🧠</div>
+                                </div>
+                                <div class="quest-status">✓</div>
+                            </div>
+
+                            <div class="quest-card" data-quest="sensei" onclick="location.href='sensei.html'">
+                                <div class="quest-icon">🧠</div>
+                                <div class="quest-info">
+                                    <div class="quest-title">Sensei: Teach Algebra</div>
+                                    <div class="quest-reward">+150 XP · +1 💎</div>
+                                </div>
+                                <div class="quest-status"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Play -->
+                    <div class="quick-play">
+                        <h2 class="quick-play-title">
+                            <span>⚔️</span>
+                            <span>Quick Play</span>
+                        </h2>
+
+                        <div class="quick-play-grid">
+                            <a href="arena.html" class="quick-play-btn">
+                                <span class="icon">🏟️</span>
+                                <span class="label">Arena</span>
+                            </a>
+
+                            <a href="arena.html?mode=dungeon" class="quick-play-btn">
+                                <span class="icon">🧱</span>
+                                <span class="label">Dungeon</span>
+                            </a>
+
+                            <a href="arena.html?mode=boss" class="quick-play-btn">
+                                <span class="icon">👑</span>
+                                <span class="label">Boss Fight</span>
+                            </a>
+
+                            <a href="sensei.html" class="quick-play-btn">
+                                <span class="icon">🧠</span>
+                                <span class="label">Sensei</span>
+                            </a>
+
+                            <a href="#" class="quick-play-btn">
+                                <span class="icon">👻</span>
+                                <span class="label">Ghost Battle</span>
+                            </a>
+
+                            <a href="#" class="quick-play-btn">
+                                <span class="icon">🎧</span>
+                                <span class="label">Synapse FM</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Skill Tree Preview -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">SAT Skill Tree</h3>
+                            <a href="profile.html#skills" class="btn btn-sm btn-ghost">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="skill-preview">
+                                <div class="skill-row">
+                                    <span class="skill-name">📐 Math</span>
+                                    <div class="xp-bar" style="flex: 1; margin: 0 1rem;">
+                                        <div class="xp-bar-fill" style="width: 65%;"></div>
+                                    </div>
+                                    <span class="skill-progress text-electric mono">8/12</span>
+                                </div>
+                                <div class="skill-row" style="margin-top: 1rem;">
+                                    <span class="skill-name">📖 Reading</span>
+                                    <div class="xp-bar" style="flex: 1; margin: 0 1rem;">
+                                        <div class="xp-bar-fill" style="width: 45%;"></div>
+                                    </div>
+                                    <span class="skill-progress text-electric mono">4/10</span>
+                                </div>
+                                <div class="skill-row" style="margin-top: 1rem;">
+                                    <span class="skill-name">✏️ Writing</span>
+                                    <div class="xp-bar" style="flex: 1; margin: 0 1rem;">
+                                        <div class="xp-bar-fill" style="width: 55%;"></div>
+                                    </div>
+                                    <span class="skill-progress text-electric mono">5/8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="dashboard-sidebar">
+                    <!-- The Oracle (Holo-Card Effect) -->
+                    <div class="oracle-panel holo-card crt-overlay relative">
+                        <div class="oracle-header">
+                            <span class="oracle-icon">🔮</span>
+                            <span class="oracle-title text-electric-glow">The Oracle</span>
+                        </div>
+
+                        <div class="oracle-score">
+                            <div class="oracle-score-value odometer" id="oracle-score">0</div>
+                            <div class="oracle-score-label">Predicted Score</div>
+                        </div>
+
+                        <div class="oracle-target">
+                            <span class="oracle-target-label">Target Score</span>
+                            <span class="oracle-target-value" id="oracle-target">1500</span>
+                        </div>
+
+                        <div class="oracle-target">
+                            <span class="oracle-target-label">Days Until Exam</span>
+                            <span class="oracle-target-value" id="oracle-days">45</span>
+                        </div>
+
+                        <div class="oracle-probability animate-heartbeat">
+                            <div class="oracle-probability-value odometer" id="oracle-probability">0</div>
+                            <div class="oracle-probability-label">Success Probability</div>
+                        </div>
+
+                        <button class="btn btn-ghost w-full mt-4" onclick="showOracleDetails()">
+                            View Details
+                        </button>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Activity</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <span class="activity-icon">✅</span>
+                                    <div class="activity-info">
+                                        <span class="activity-text">Completed Math Arena</span>
+                                        <span class="activity-time text-muted text-sm">2 hours ago</span>
+                                    </div>
+                                    <span class="activity-reward text-success">+50 XP</span>
+                                </div>
+
+                                <div class="activity-item" style="margin-top: 1rem;">
+                                    <span class="activity-icon">🏆</span>
+                                    <div class="activity-info">
+                                        <span class="activity-text">Cleared Grammar Dungeon</span>
+                                        <span class="activity-time text-muted text-sm">5 hours ago</span>
+                                    </div>
+                                    <span class="activity-reward text-success">+100 XP</span>
+                                </div>
+
+                                <div class="activity-item" style="margin-top: 1rem;">
+                                    <span class="activity-icon">🎯</span>
+                                    <div class="activity-info">
+                                        <span class="activity-text">7-day streak achieved!</span>
+                                        <span class="activity-time text-muted text-sm">Yesterday</span>
+                                    </div>
+                                    <span class="activity-reward text-warning">+25 🧠</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">This Week</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-stats">
+                                <div class="quick-stat">
+                                    <span class="quick-stat-value text-electric" id="stat-questions">347</span>
+                                    <span class="quick-stat-label text-muted text-sm">Questions</span>
+                                </div>
+                                <div class="quick-stat">
+                                    <span class="quick-stat-value text-success" id="stat-accuracy">83%</span>
+                                    <span class="quick-stat-label text-muted text-sm">Accuracy</span>
+                                </div>
+                                <div class="quick-stat">
+                                    <span class="quick-stat-value text-purple" id="stat-time">4.2h</span>
+                                    <span class="quick-stat-label text-muted text-sm">Study Time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Command Palette (Ctrl+K) -->
+    <div class="command-palette hidden" id="command-palette">
+        <input type="text" class="command-palette-input" id="command-input" placeholder="Type a command or search...">
+        <div class="command-results" id="command-results">
+            <div class="command-result" onclick="location.href='arena.html?topic=math'">
+                <span class="command-result-icon">📐</span>
+                <span>Jump to Math Arena</span>
+            </div>
+            <div class="command-result" onclick="location.href='arena.html?topic=reading'">
+                <span class="command-result-icon">📖</span>
+                <span>Jump to Reading Arena</span>
+            </div>
+            <div class="command-result" onclick="location.href='sensei.html'">
+                <span class="command-result-icon">🧠</span>
+                <span>Open Sensei Mode</span>
+            </div>
+            <div class="command-result" onclick="location.href='profile.html'">
+                <span class="command-result-icon">👤</span>
+                <span>View Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Oracle Details Modal -->
+    <div class="modal-overlay" id="oracle-modal">
+        <div class="modal holo-card">
+            <div class="modal-header">
+                <h2 class="modal-title text-electric-glow">🔮 Oracle Analysis</h2>
+                <button class="modal-close" onclick="closeOracleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-4">
+                    Based on your performance across <span class="text-electric" id="modal-questions">347</span>
+                    questions and current improvement rate,
+                    here's your detailed prediction:
+                </p>
+
+                <div class="oracle-breakdown">
+                    <div class="breakdown-item">
+                        <span>Math Section</span>
+                        <span class="text-electric mono">720</span>
+                    </div>
+                    <div class="breakdown-item" style="margin-top: 0.5rem;">
+                        <span>Reading & Writing</span>
+                        <span class="text-electric mono">700</span>
+                    </div>
+                    <div class="breakdown-item"
+                        style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--slate);">
+                        <span class="font-semibold">Total Predicted</span>
+                        <span class="text-electric mono font-bold" id="modal-predicted">1420</span>
+                    </div>
+                </div>
+
+                <div class="oracle-insight"
+                    style="margin-top: 1.5rem; padding: 1rem; background: var(--navy-deep); border-radius: 0.75rem;">
+                    <p class="text-sm" id="oracle-recommendation">
+                        <span class="text-warning">💡 Insight:</span>
+                        Focus on Algebra word problems and passage-based inference questions to maximize your score
+                        improvement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .skill-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-name {
+            min-width: 100px;
+            font-weight: 500;
+        }
+
+        .skill-progress {
+            min-width: 50px;
+            text-align: right;
+            font-family: var(--font-mono);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .activity-icon {
+            font-size: 1.25rem;
+        }
+
+        .activity-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-reward {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            gap: 1rem;
+        }
+
+        .quick-stat-value {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/antigravity.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // ─────────────────────────────────────────────────────────────────────
+        // AUTH CHECK
+        // ─────────────────────────────────────────────────────────────────────
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication
+            if (!isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user data
+            loadUserData();
+
+            // Animate Oracle numbers
+            animateOracleNumbers();
+
+            // Set current date
+            setCurrentDate();
+        });
+
+        function loadUserData() {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            // Update header
+            document.getElementById('user-name').textContent = user.profile.displayName;
+            document.getElementById('header-level').textContent = user.stats.level;
+            document.getElementById('header-braincells').textContent = user.stats.braincells.toLocaleString();
+            document.getElementById('header-darkmatter').textContent = user.stats.darkmatter;
+
+            // Update XP bar
+            document.getElementById('xp-level').textContent = user.stats.level;
+
+            // Update streak
+            document.getElementById('streak-value').textContent = user.stats.streak;
+
+            // Update stats
+            document.getElementById('stat-questions').textContent = user.stats.totalQuestions;
+            const accuracy = user.stats.totalQuestions > 0
+                ? Math.round((user.stats.correctAnswers / user.stats.totalQuestions) * 100)
+                : 0;
+            document.getElementById('stat-accuracy').textContent = accuracy + '%';
+        }
+
+        // ─────────────────────────────────────────────────────────────────────
+        // ANIMATED ORACLE NUMBERS (Odometer Effect)
+        // ─────────────────────────────────────────────────────────────────────
+
+        function animateValue(element, start, end, duration, suffix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                element.textContent = current + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function animateOracleNumbers() {
+            const user = getCurrentUser();
+            const oracleData = user ? user.oracle : {
+                predictedScore: 1420,
+                probability: 73,
+                daysLeft: 45,
+                targetScore: 1500
+            };
+
+            // Animate predicted score
+            const scoreEl = document.getElementById('oracle-score');
+            animateValue(scoreEl, 0, oracleData.predictedScore, 2000);
+
+            // Animate probability
+            const probEl = document.getElementById('oracle-probability');
+            animateValue(probEl, 0, oracleData.probability, 1500, '%');
+
+            // Set other values
+            document.getElementById('oracle-target').textContent = oracleData.targetScore;
+            document.getElementById('oracle-days').textContent = oracleData.daysLeft;
+        }
+
+        // ─────────────────────────────────────────────────────────────────────
+        // UTILITIES
+        // ─────────────────────────────────────────────────────────────────────
+
+        function setCurrentDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('current-date').textContent = today;
+        }
+
+        function handleLogout() {
+            logoutUser();
+            window.location.href = 'login.html';
+        }
+
+        // ─────────────────────────────────────────────────────────────────────
+        // ORACLE MODAL
+        // ─────────────────────────────────────────────────────────────────────
+
+        function showOracleDetails() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('modal-questions').textContent = user.stats.totalQuestions;
+                document.getElementById('modal-predicted').textContent = user.oracle.predictedScore;
+
+                // Generate AI recommendation
+                if (typeof generateStudyRecommendation === 'function') {
+                    const recommendation = generateStudyRecommendation(user);
+                    document.getElementById('oracle-recommendation').innerHTML =
+                        `<span class="text-warning">💡 Insight:</span> ${recommendation}`;
+                }
+            }
+            document.getElementById('oracle-modal').classList.add('active');
+        }
+
+        function closeOracleModal() {
+            document.getElementById('oracle-modal').classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('oracle-modal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeOracleModal();
+            }
+        });
+
+        // ─────────────────────────────────────────────────────────────────────
+        // COMMAND PALETTE (Ctrl+K)
+        // ─────────────────────────────────────────────────────────────────────
+
+        document.addEventListener('keydown', function (e) {
+            // Ctrl+K or Cmd+K to open command palette
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleCommandPalette();
+            }
+
+            // Escape to close
+            if (e.key === 'Escape') {
+                closeOracleModal();
+                closeCommandPalette();
+            }
+        });
+
+        function toggleCommandPalette() {
+            const palette = document.getElementById('command-palette');
+            palette.classList.toggle('hidden');
+            if (!palette.classList.contains('hidden')) {
+                document.getElementById('command-input').focus();
+            }
+        }
+
+        function closeCommandPalette() {
+            document.getElementById('command-palette').classList.add('hidden');
+        }
+
+        // Filter command results
+        document.getElementById('command-input')?.addEventListener('input', function (e) {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.command-result').forEach(result => {
+                const text = result.textContent.toLowerCase();
+                result.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>

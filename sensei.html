@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SYNAPSE Sensei Mode - Teach to truly learn. Prove your mastery.">
+    <title>Sensei Mode — SYNAPSE</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- Sensei Page -->
+    <div class="sensei-page">
+        <!-- Header -->
+        <header class="sensei-header">
+            <a href="dashboard.html" class="btn btn-ghost btn-sm"
+                style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);">
+                <span>←</span>
+                <span>Exit</span>
+            </a>
+            <h1 class="sensei-title">🧠 Sensei Mode</h1>
+            <p class="sensei-subtitle">"You are the teacher now."</p>
+        </header>
+
+        <!-- Topic Selection -->
+        <div id="sensei-topic-select" class="sensei-topic-select">
+            <div class="container">
+                <div class="text-center mb-8">
+                    <p class="text-lg text-muted">
+                        ANTIGRAVITY will ask you to explain a concept.<br>
+                        Teach clearly. Resist vague explanations. Prove mastery.
+                    </p>
+                </div>
+
+                <div class="sensei-topic-grid">
+                    <button class="sensei-topic-btn" onclick="startSensei('quadratic')">
+                        <span class="topic-icon">📐</span>
+                        <span class="topic-title">Quadratic Equations</span>
+                        <span class="topic-difficulty">Intermediate</span>
+                    </button>
+
+                    <button class="sensei-topic-btn" onclick="startSensei('inference')">
+                        <span class="topic-icon">📖</span>
+                        <span class="topic-title">Making Inferences</span>
+                        <span class="topic-difficulty">Intermediate</span>
+                    </button>
+
+                    <button class="sensei-topic-btn" onclick="startSensei('semicolons')">
+                        <span class="topic-icon">✏️</span>
+                        <span class="topic-title">Semicolon Usage</span>
+                        <span class="topic-difficulty">Basic</span>
+                    </button>
+
+                    <button class="sensei-topic-btn" onclick="startSensei('pythagorean')">
+                        <span class="topic-icon">📐</span>
+                        <span class="topic-title">Pythagorean Theorem</span>
+                        <span class="topic-difficulty">Basic</span>
+                    </button>
+                </div>
+
+                <div class="sensei-reward-preview">
+                    <p class="text-muted text-sm">
+                        Successful teaching rewards: <span class="text-electric">+150 XP</span> · <span
+                            class="text-purple">+1 💎 Dark Matter</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div id="sensei-chat" class="sensei-content hidden">
+            <!-- Topic Banner -->
+            <div class="sensei-topic">
+                <div class="sensei-topic-label">Teaching Topic</div>
+                <div class="sensei-topic-title" id="current-topic-title">Quadratic Equations</div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chat-container">
+                <!-- Messages will be added here -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <textarea id="chat-input" class="chat-input" placeholder="Explain the concept clearly..."
+                    rows="2"></textarea>
+                <button class="btn btn-primary" id="send-btn" onclick="sendMessage()">
+                    <span>Send</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Evaluation Screen -->
+        <div id="sensei-evaluation" class="sensei-content hidden">
+            <div class="container">
+                <div class="sensei-evaluation" style="max-width: 600px; margin: 2rem auto;">
+                    <div class="evaluation-header">
+                        <span class="evaluation-icon">📜</span>
+                        <span class="evaluation-title">Session Evaluation</span>
+                    </div>
+
+                    <div class="evaluation-score">
+                        <div class="evaluation-score-value" id="eval-score">A</div>
+                        <div class="text-muted">Teaching Grade</div>
+                    </div>
+
+                    <div class="evaluation-breakdown" id="eval-breakdown">
+                        <!-- Will be populated dynamically -->
+                    </div>
+
+                    <div class="evaluation-feedback" id="eval-feedback">
+                        <!-- Will be populated dynamically -->
+                    </div>
+
+                    <!-- AI Comprehension Log -->
+                    <div class="ai-thought-process">
+                        <h3>🤖 AI Comprehension Log</h3>
+                        <ul class="log-entries" id="ai-log-entries">
+                            <!-- Will be populated dynamically -->
+                        </ul>
+                    </div>
+
+                    <div class="evaluation-rewards" style="margin-top: 1.5rem; text-align: center;">
+                        <div class="flex justify-center gap-4 mb-4">
+                            <div class="currency-display">
+                                <span>+</span>
+                                <span class="currency-amount" id="reward-xp">150</span>
+                                <span>XP</span>
+                            </div>
+                            <div class="currency-display currency-darkmatter">
+                                <span class="currency-icon">💎</span>
+                                <span>+</span>
+                                <span class="currency-amount" id="reward-dm">1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 justify-center mt-6">
+                        <button class="btn btn-arena" onclick="restartSensei()">
+                            <span>🔄</span>
+                            <span>Teach Again</span>
+                        </button>
+                        <a href="dashboard.html" class="btn btn-secondary">
+                            <span>🏠</span>
+                            <span>Dashboard</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .sensei-topic-select {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .sensei-topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        .sensei-topic-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 2rem;
+            background: var(--navy-mid);
+            border: 2px solid var(--slate);
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .sensei-topic-btn:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow-purple);
+        }
+
+        .sensei-topic-btn .topic-icon {
+            font-size: 2.5rem;
+        }
+
+        .sensei-topic-btn .topic-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--off-white);
+        }
+
+        .sensei-topic-btn .topic-difficulty {
+            font-size: 0.75rem;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sensei-reward-preview {
+            text-align: center;
+            padding: 1rem;
+            background: var(--navy-mid);
+            border-radius: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .evaluation-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .breakdown-stat {
+            padding: 1rem;
+            background: var(--navy-deep);
+            border-radius: 0.75rem;
+        }
+
+        .breakdown-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .breakdown-label {
+            font-size: 0.75rem;
+            color: var(--soft-gray);
+            text-transform: uppercase;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/antigravity.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/sensei.js"></script>
+    <script>
+        // Override endSensei to include AI comprehension log
+        const originalEndSensei = window.endSensei;
+        window.endSensei = function () {
+            // Call original
+            if (originalEndSensei) originalEndSensei();
+
+            // Generate and display AI comprehension log
+            if (typeof generateComprehensionLog === 'function') {
+                const log = generateComprehensionLog(senseiState.messages);
+                const logContainer = document.getElementById('ai-log-entries');
+
+                if (logContainer && log.length > 0) {
+                    logContainer.innerHTML = log.map(entry =>
+                        `<li class="log-entry ${entry.type}">${entry.text}</li>`
+                    ).join('');
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>
