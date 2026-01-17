@@ -210,8 +210,17 @@ function formatNumber(num) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Check if we should inject components (skip on landing page header)
-    const skipNavPages = ['index.html', 'login.html', 'signup.html'];
+    // Check if we should inject components
+    // Skip on pages that already have their own headers
+    const skipNavPages = [
+        'index.html',
+        'login.html',
+        'signup.html',
+        'dashboard.html',  // Has its own header
+        'arena.html',      // Has its own arena header
+        'sensei.html',     // Has its own sensei header
+        'profile.html'     // Has its own profile header
+    ];
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
     if (!skipNavPages.includes(currentPage)) {
