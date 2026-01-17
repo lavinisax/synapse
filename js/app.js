@@ -10,7 +10,7 @@ const SYNAPSE = {
   // XP & Leveling
   XP_PER_LEVEL: 1000,
   XP_GROWTH_RATE: 1.15, // Each level requires 15% more XP
-  
+
   // Economy
   BRAINCELL_REWARDS: {
     arena_correct: 10,
@@ -19,17 +19,17 @@ const SYNAPSE = {
     boss_defeat: 100,
     sensei_success: 75
   },
-  
+
   DARKMATTER_REWARDS: {
     boss_defeat: 1,
     sensei_mastery: 2,
     raid_victory: 1
   },
-  
+
   // Timer
   ARENA_TIME: 90, // seconds per question
   DUNGEON_TIME: 180,
-  
+
   // Storage Keys
   STORAGE_KEY: 'synapse_data'
 };
@@ -40,36 +40,54 @@ const SYNAPSE = {
 
 const defaultState = {
   user: {
-    name: 'Scholar',
-    level: 23,
+    name: 'Alex Chen',
+    level: 12,
     xp: 2450,
     braincells: 1250,
     darkmatter: 3
   },
   stats: {
-    streak: 7,
-    totalQuestions: 347,
-    correctAnswers: 289,
-    accuracy: 83,
-    hoursStudied: 42
+    streak: 3,
+    maxStreak: 7,
+    totalQuestions: 147,
+    correctAnswers: 118,
+    accuracy: 80,
+    hoursStudied: 18,
+    arenaWins: 23,
+    bossBattles: 2
   },
   oracle: {
-    predictedScore: 1420,
+    predictedScore: 1340,
     targetScore: 1500,
-    probability: 73,
-    daysLeft: 45
+    probability: 68,
+    daysLeft: 45,
+    examDate: '2026-03-15'
   },
   quests: [
-    { id: 1, title: 'Arena: Math Challenge', reward: 50, completed: false, type: 'arena' },
+    { id: 1, title: 'Arena: Math Challenge', reward: 50, completed: true, type: 'arena' },
     { id: 2, title: 'Dungeon: Grammar Gauntlet', reward: 100, completed: false, type: 'dungeon' },
     { id: 3, title: 'Sensei: Algebra Mastery', reward: 150, completed: false, type: 'sensei' }
   ],
   skillTrees: {
     sat: {
-      math: { progress: 65, nodes: 12, unlocked: 8 },
-      reading: { progress: 45, nodes: 10, unlocked: 4 },
-      writing: { progress: 55, nodes: 8, unlocked: 5 }
+      math: { progress: 55, nodes: 12, unlocked: 6 },
+      reading: { progress: 40, nodes: 10, unlocked: 4 },
+      writing: { progress: 35, nodes: 8, unlocked: 3 }
     }
+  },
+  activityFeed: [
+    { type: 'arena', message: 'Completed Math Arena', xp: 120, timestamp: Date.now() - 3600000 },
+    { type: 'streak', message: '3-day streak achieved!', xp: 50, timestamp: Date.now() - 7200000 },
+    { type: 'sensei', message: 'Explained Quadratics to Sensei', xp: 75, timestamp: Date.now() - 86400000 },
+    { type: 'vault', message: 'Added question to Weakness Vault', xp: 0, timestamp: Date.now() - 172800000 },
+    { type: 'arena', message: 'Beat Reading Arena', xp: 90, timestamp: Date.now() - 259200000 }
+  ],
+  nextAction: {
+    title: 'Continue: Algebra Arena',
+    type: 'arena',
+    topic: 'math',
+    icon: '📐',
+    description: 'You were 2 questions away from completing this battle!'
   }
 };
 
@@ -134,11 +152,11 @@ function addXP(amount) {
   const oldLevel = state.user.level;
   state.user.xp += amount;
   state.user.level = getLevelFromXP(state.user.xp);
-  
+
   if (state.user.level > oldLevel) {
     showLevelUp(state.user.level);
   }
-  
+
   saveState(state);
   updateUI();
 }
@@ -177,30 +195,30 @@ function addDarkMatter(amount) {
 
 function updateOracle(correctAnswers, totalQuestions) {
   const sessionAccuracy = (correctAnswers / totalQuestions) * 100;
-  
+
   // Simple prediction model (would be more sophisticated with real AI)
   const baseScore = 1000;
   const maxScore = 1600;
   const accuracyWeight = (state.stats.accuracy + sessionAccuracy) / 2;
-  
+
   state.oracle.predictedScore = Math.round(
     baseScore + ((maxScore - baseScore) * (accuracyWeight / 100))
   );
-  
+
   // Update probability based on predicted vs target
   const scoreDiff = state.oracle.targetScore - state.oracle.predictedScore;
   const daysRemaining = state.oracle.daysLeft;
-  
+
   // Simple probability calculation
   if (scoreDiff <= 0) {
     state.oracle.probability = 95;
   } else {
     const improvementNeeded = scoreDiff / daysRemaining;
-    state.oracle.probability = Math.max(10, Math.min(90, 
+    state.oracle.probability = Math.max(10, Math.min(90,
       100 - (improvementNeeded * 5)
     ));
   }
-  
+
   saveState(state);
   updateUI();
 }
@@ -216,35 +234,35 @@ function updateUI() {
   xpBars.forEach(bar => {
     bar.style.width = `${progress}%`;
   });
-  
+
   // Update level badges
   const levelBadges = document.querySelectorAll('.level-value');
   levelBadges.forEach(badge => {
     badge.textContent = state.user.level;
   });
-  
+
   // Update currency displays
   document.querySelectorAll('.braincell-value').forEach(el => {
     el.textContent = state.user.braincells.toLocaleString();
   });
-  
+
   document.querySelectorAll('.darkmatter-value').forEach(el => {
     el.textContent = state.user.darkmatter;
   });
-  
+
   // Update Oracle
   document.querySelectorAll('.oracle-score-value').forEach(el => {
     if (el.id === 'oracle-score') {
       animateNumber(el, parseInt(el.textContent) || 0, state.oracle.predictedScore);
     }
   });
-  
+
   document.querySelectorAll('.oracle-probability-value').forEach(el => {
     if (el.id === 'oracle-prob') {
       el.textContent = `${state.oracle.probability}%`;
     }
   });
-  
+
   // Update streak
   document.querySelectorAll('.streak-value').forEach(el => {
     el.textContent = state.stats.streak;
@@ -254,22 +272,22 @@ function updateUI() {
 function animateNumber(element, start, end, duration = 1000) {
   const startTime = performance.now();
   const diff = end - start;
-  
+
   function update(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    
+
     // Ease out quad
     const eased = 1 - Math.pow(1 - progress, 2);
     const current = Math.round(start + (diff * eased));
-    
+
     element.textContent = current;
-    
+
     if (progress < 1) {
       requestAnimationFrame(update);
     }
   }
-  
+
   requestAnimationFrame(update);
 }
 
@@ -292,9 +310,9 @@ function showReward(icon, amount) {
     z-index: 1000;
     animation: slideUp 0.3s ease, fadeIn 0.3s ease;
   `;
-  
+
   document.body.appendChild(reward);
-  
+
   setTimeout(() => {
     reward.style.animation = 'fadeOut 0.3s ease forwards';
     setTimeout(() => reward.remove(), 300);
@@ -322,7 +340,7 @@ function showLevelUp(newLevel) {
     justify-content: center;
     z-index: 1000;
   `;
-  
+
   const style = document.createElement('style');
   style.textContent = `
     .level-up-content {
@@ -352,7 +370,7 @@ function showLevelUp(newLevel) {
       margin-bottom: 1rem;
     }
   `;
-  
+
   document.head.appendChild(style);
   document.body.appendChild(modal);
 }
@@ -364,9 +382,9 @@ function showLevelUp(newLevel) {
 function createParticles() {
   const container = document.getElementById('particles');
   if (!container) return;
-  
+
   const particleCount = 30;
-  
+
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     particle.className = 'particle';
@@ -385,7 +403,7 @@ function createParticles() {
 
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
@@ -407,7 +425,7 @@ function initScrollAnimations() {
       }
     });
   }, { threshold: 0.1 });
-  
+
   document.querySelectorAll('.animate-slide-up, .feature-card, .mode-card').forEach(el => {
     el.style.opacity = '0';
     observer.observe(el);
@@ -435,7 +453,7 @@ document.head.appendChild(animationStyles);
 function animateHeroXP() {
   const heroXP = document.getElementById('hero-xp');
   if (!heroXP) return;
-  
+
   // Animate the XP bar filling
   heroXP.style.width = '0%';
   setTimeout(() => {
@@ -450,11 +468,11 @@ function animateHeroXP() {
 function animateOracle() {
   const scoreEl = document.getElementById('oracle-score');
   const probEl = document.getElementById('oracle-prob');
-  
+
   if (scoreEl) {
     animateNumber(scoreEl, 1200, 1420, 2000);
   }
-  
+
   if (probEl) {
     let prob = 50;
     const interval = setInterval(() => {
@@ -475,16 +493,16 @@ function animateOracle() {
 document.addEventListener('DOMContentLoaded', () => {
   // Create particles on landing page
   createParticles();
-  
+
   // Initialize smooth scroll
   initSmoothScroll();
-  
+
   // Initialize scroll animations
   initScrollAnimations();
-  
+
   // Animate hero XP
   animateHeroXP();
-  
+
   // Animate Oracle on scroll
   const oracleSection = document.getElementById('oracle');
   if (oracleSection) {
@@ -496,10 +514,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
     observer.observe(oracleSection);
   }
-  
+
   // Update UI with current state
   updateUI();
-  
+
   console.log('🧠 SYNAPSE initialized. You are ANTIGRAVITY.');
 });
 
